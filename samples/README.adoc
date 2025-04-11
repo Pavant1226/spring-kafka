@@ -8,3 +8,15 @@
 * sample-06 - Kafka Streams tests with TopologyTestDriver
 * sample-07 - The New consumer rebalance protocol in spring-kafka
 * sample-08 - The Micrometer observation propagation from `KafkaTemplate` to `@KafkaListener`
+@RestController
+public class KafkaProducerController {
+
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
+    @PostMapping("/send")
+    public ResponseEntity<String> sendMessage(@RequestParam String message) {
+        kafkaTemplate.send("main-topic", message);
+        return ResponseEntity.ok("Message sent to Kafka");
+    }
+}
